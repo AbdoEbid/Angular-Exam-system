@@ -1,0 +1,43 @@
+<div class="container my-5">
+  <!-- Title in the center -->
+  <div class="text-center mb-3">
+    <h2 class="fw-bold text-primary">
+      📝 Available Exams
+    </h2>
+  </div>
+
+  <!-- Logout aligned to the right -->
+  <div class="text-end mb-4">
+    <button class="btn btn-outline-danger" (click)="logout()">
+      <i class="fas fa-sign-out-alt me-1"></i> Logout
+    </button>
+  </div>
+
+  <!-- Table section -->
+  <div class="table-responsive shadow rounded overflow-hidden">
+    <table class="table table-striped table-hover align-middle text-center mb-0">
+      <thead class="table-primary">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Exam Name</th>
+          <th scope="col">Date</th>
+          <th scope="col">Course</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let exam of exams; trackBy: trackByExamId">
+          <td>{{ exam.examID }}</td>
+          <td>{{ exam.name }}</td>
+          <td>{{ exam.examDate | date: 'mediumDate' }}</td>
+          <td>{{ exam.courseID }}</td>
+          <td>
+            <a [routerLink]="['/exam', exam.examID]" class="btn btn-sm btn-success d-inline-flex align-items-center">
+              <i class="fas fa-play-circle me-1"></i> Start
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,137 @@
+
+.exams-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.exams-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.exams-title {
+  color: #2c3e50;
+  font-weight: 600;
+  margin: 0;
+}
+
+.btn-logout {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.btn-logout:hover {
+  background-color: #c0392b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.exams-table-container {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.exams-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.exams-table thead {
+  background: linear-gradient(135deg, #3498db, #2980b9);
+  color: white;
+}
+
+.exams-table th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.exams-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #ecf0f1;
+  color: #34495e;
+}
+
+.exams-table tr:last-child td {
+  border-bottom: none;
+}
+
+.exams-table tr:hover td {
+  background-color: #f8f9fa;
+}
+
+.btn-exam-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #2ecc71;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.btn-exam-action:hover {
+  background-color: #27ae60;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive table */
+@media (max-width: 768px) {
+  .exams-table {
+    border: 0;
+  }
+  
+  .exams-table thead {
+    display: none;
+  }
+  
+  .exams-table tr {
+    display: block;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  
+  .exams-table td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    border-bottom: 1px solid #eee;
+    text-align: right;
+  }
+  
+  .exams-table td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    margin-right: 1rem;
+    color: #7f8c8d;
+  }
+  
+  .exams-table td:last-child {
+    border-bottom: 0;
+  }
+  
+  .btn-exam-action {
+    width: 100%;
+    justify-content: center;
+  }
+}

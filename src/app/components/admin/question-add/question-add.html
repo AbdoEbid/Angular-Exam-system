@@ -1,0 +1,124 @@
+<div class="d-flex justify-content-center">
+  <form [formGroup]="questionForm" (ngSubmit)="onSubmit()" class="p-4 bg-white rounded-3 shadow-sm" style="max-width: 650px; width: 100%;">
+    <!-- Question -->
+    <div class="mb-4">
+      <label class="form-label fw-semibold text-muted">Question Text</label>
+      <input 
+        type="text" 
+        formControlName="body" 
+        class="form-control p-3 border-2"
+        placeholder="Enter the question text"
+      />
+    </div>
+
+    <!-- Mark -->
+    <div class="mb-4">
+      <label class="form-label fw-semibold text-muted">Points</label>
+      <input 
+        type="number" 
+        formControlName="mark" 
+        class="form-control p-3 border-2"
+        placeholder="Enter point value"
+        min="1"
+      />
+    </div>
+
+    <!-- Question Type -->
+    <div class="mb-4">
+      <label class="form-label fw-semibold text-muted">Question Type</label>
+      <select 
+        formControlName="type" 
+        class="form-select p-3 border-2"
+        (change)="onTypeChange()"
+      >
+        <option value="TF">True / False</option>
+        <option value="ChooseOne">Multiple Choice (Single Answer)</option>
+        <option value="ChooseAll">Multiple Choice (Multiple Answers)</option>
+      </select>
+    </div>
+
+    <!-- Answers Section -->
+    <div formArrayName="answers" class="mb-4">
+      <div *ngFor="let answer of answers.controls; let i = index" [formGroupName]="i" 
+           class="mb-3 border rounded-3 p-3 bg-light">
+        <input 
+          type="text" 
+          formControlName="body" 
+          class="form-control mb-2"
+          placeholder="Enter answer option"
+        />
+        <div class="form-check form-switch">
+          <input 
+            class="form-check-input" 
+            type="checkbox" 
+            formControlName="isCorrect"
+            id="correct-{{i}}"
+          />
+          <label class="form-check-label" for="correct-{{i}}">Correct Answer</label>
+        </div>
+        <button 
+          *ngIf="questionForm.get('type')?.value !== 'TF'" 
+          type="button" 
+          class="btn btn-outline-danger btn-sm mt-2"
+          (click)="removeAnswer(i)"
+        >
+          <i class="bi bi-trash"></i> Remove
+        </button>
+      </div>
+    </div>
+
+    <!-- Add Answer Button -->
+    <button 
+      *ngIf="questionForm.get('type')?.value !== 'TF'" 
+      type="button" 
+      class="btn btn-outline-primary w-100 mb-3"
+      (click)="addAnswer()"
+    >
+      <i class="bi bi-plus-circle"></i> Add Answer Option
+    </button>
+
+    <div class="d-grid gap-2">
+      <!-- Submit Button -->
+      <button 
+        type="submit" 
+        class="btn btn-success py-2"
+        [disabled]="questionForm.invalid"
+      >
+        <i class="bi bi-check-circle"></i> Save Question
+      </button>
+
+      <!-- Finish Button -->
+      <button 
+        type="button" 
+        class="btn btn-primary py-2"
+        (click)="finish()" 
+        [disabled]="addedQuestions === 0"
+      >
+        <i class="bi bi-save"></i> Finish & Return to Exams
+      </button>
+    </div>
+
+    <!-- Modal -->
+    <div *ngIf="showModal" class="modal-backdrop fade show"></div>
+    <div *ngIf="showModal" class="modal d-block fade show" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content border-0 shadow-lg rounded-3">
+          <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title fw-bold">
+              <i class="bi bi-info-circle"></i> Notification
+            </h5>
+            <button type="button" class="btn-close btn-close-white" (click)="closeModal()"></button>
+          </div>
+          <div class="modal-body p-4">
+            <p class="mb-0 fs-5">{{ modalMessage }}</p>
+          </div>
+          <div class="modal-footer border-0">
+            <button type="button" class="btn btn-primary w-100" (click)="closeModal()">
+              OK
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

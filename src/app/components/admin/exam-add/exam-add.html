@@ -1,0 +1,114 @@
+<div class="position-relative">
+  <form
+    [formGroup]="examForm"
+    (ngSubmit)="onSubmit()"
+    class="container my-5 p-4 p-md-5 rounded-3 shadow bg-white border-0"
+    style="max-width: 600px;"
+  >
+    <div class="text-center mb-4">
+      <h2 class="text-primary fw-bold mb-3">📝 Add New Exam</h2>
+      <p class="text-muted">Fill in the details to create a new examination</p>
+    </div>
+
+    <!-- Exam Name -->
+    <div class="mb-4">
+      <label class="form-label fw-semibold text-muted mb-2">Exam Name</label>
+      <input
+        type="text"
+        class="form-control p-3"
+        formControlName="name"
+        placeholder="Enter exam name"
+      />
+    </div>
+
+    <!-- Exam Date -->
+    <div class="mb-4">
+      <label class="form-label fw-semibold text-muted mb-2">Exam Date</label>
+      <input
+        type="date"
+        class="form-control p-3"
+        formControlName="examDate"
+      />
+    </div>
+
+    <!-- Course Selection -->
+    <div class="mb-4">
+      <label class="form-label fw-semibold text-muted mb-2">Course</label>
+
+      <ng-container *ngIf="isLoadingCourses; else courseList">
+        <div class="d-flex align-items-center gap-2 text-muted">
+          <span class="spinner-border spinner-border-sm"></span>
+          Loading courses...
+        </div>
+      </ng-container>
+
+      <ng-template #courseList>
+        <select class="form-select p-3" formControlName="courseID">
+          <option value="">-- Select Course --</option>
+          <option *ngFor="let c of courses" [value]="c.courseID">
+            {{ c.name }}
+          </option>
+        </select>
+        <div *ngIf="loadCoursesError" class="alert alert-danger mt-3 mb-0">
+          ⚠️ {{ loadCoursesError }}
+        </div>
+      </ng-template>
+    </div>
+
+    <!-- Submit Button -->
+    <button
+      type="submit"
+      class="btn btn-primary w-100 py-3 mt-3"
+      [disabled]="examForm.invalid || isLoadingCourses"
+      [class.btn-success]="!examForm.invalid"
+    >
+      <span *ngIf="!isLoadingCourses">
+        <i class="bi bi-plus-circle me-2"></i>Add Exam
+      </span>
+      <span *ngIf="isLoadingCourses">
+        <span class="spinner-border spinner-border-sm me-2"></span>
+        Processing...
+      </span>
+    </button>
+
+    <!-- Modal Overlay -->
+    <div *ngIf="showModal" class="modal-backdrop fade show"></div>
+
+    <!-- Modal -->
+    <div
+      *ngIf="showModal"
+      class="modal d-block fade show"
+      tabindex="-1"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content border-0 shadow-lg rounded-3" style="z-index: 2000;">
+          <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title fw-bold">
+              <i class="bi bi-check-circle me-2"></i>Notification
+            </h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              (click)="closeModal()"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body p-4">
+            <p class="mb-0 fs-5">{{ modalMessage }}</p>
+          </div>
+          <div class="modal-footer border-0">
+            <button
+              type="button"
+              class="btn btn-primary w-100 py-2"
+              (click)="closeModal()"
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,48 @@
+<!-- Login Page Stylish UI with Animation -->
+<div class="min-vh-100 d-flex justify-content-center align-items-center bg-light">
+  <div
+    class="bg-white shadow rounded p-5 animate-fadeInUp"
+    style="width: 100%; max-width: 450px;"
+  >
+    <h2 class="text-center mb-4 text-primary fw-bold">Student Login</h2>
+
+    <form (ngSubmit)="login()" #loginForm="ngForm">
+      <div class="form-group mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input
+          type="email"
+          id="email"
+          class="form-control"
+          [(ngModel)]="email"
+          name="email"
+          placeholder="Enter your email"
+          required />
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input
+          type="password"
+          id="password"
+          class="form-control"
+          [(ngModel)]="password"
+          name="password"
+          placeholder="Enter your password"
+          required />
+      </div>
+
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100" [disabled]="loginForm.invalid">
+        Login
+      </button>
+    </form>
+
+    <div class="text-center mt-4">
+      <span class="text-muted">Don't have an account?</span>
+      <a routerLink="/register" class="text-decoration-none fw-bold text-primary">Create one</a>
+    </div>
+  </div>
+</div>

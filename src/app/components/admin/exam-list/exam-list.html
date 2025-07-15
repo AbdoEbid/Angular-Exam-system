@@ -1,0 +1,140 @@
+<div class="container my-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2 class="text-primary fw-bold mb-1">📚 Exam Management</h2>
+      <p class="text-muted mb-0">View and manage all examination records</p>
+    </div>
+    <div class="d-flex gap-3">
+      <button class="btn btn-success d-flex align-items-center gap-2" (click)="addNewExam()">
+        <i class="bi bi-plus-circle"></i> Add New Exam
+      </button>
+      <button class="btn btn-outline-secondary d-flex align-items-center gap-2" (click)="logout()">
+        <i class="bi bi-box-arrow-right"></i> Logout
+      </button>
+    </div>
+  </div>
+
+  <div class="card border-0 shadow">
+    <div class="card-header bg-primary text-white py-3">
+      <h5 class="card-title mb-0">Examination Records</h5>
+    </div>
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th style="width: 5%;" class="text-center">ID</th>
+              <th style="width: 25%;">Exam Name</th>
+              <th style="width: 20%;" class="text-center">Date</th>
+              <th style="width: 15%;" class="text-center">Course Code</th>
+              <th style="width: 35%;" class="text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let exam of exams" class="border-top">
+              <td class="text-center fw-semibold text-muted">{{ exam.examID }}</td>
+              <td>
+                <div class="d-flex align-items-center">
+                  <div class="icon-circle bg-light-primary me-3">
+                    <i class="bi bi-journal-text text-primary"></i>
+                  </div>
+                  <div>
+                    <h6 class="mb-0">{{ exam.name }}</h6>
+                    <small class="text-muted">Duration: 2 hours</small>
+                  </div>
+                </div>
+              </td>
+              <td class="text-center">
+                <div class="badge bg-light-primary text-primary p-2">
+                  <i class="bi bi-calendar me-2"></i>
+                  {{ exam.examDate | date: 'mediumDate' }}
+                </div>
+              </td>
+              <td class="text-center">
+                <span class="badge bg-light-warning text-dark p-2">
+                  {{ exam.courseID }}
+                </span>
+              </td>
+              <td class="text-center">
+                <div class="d-flex justify-content-center gap-2">
+                  <button class="btn btn-sm btn-light-primary d-flex align-items-center gap-1" (click)="goToDetails(exam.examID)">
+                    <i class="bi bi-eye"></i> View
+                  </button>
+                  <button class="btn btn-sm btn-light-warning d-flex align-items-center gap-1" (click)="editExam(exam.examID)">
+                    <i class="bi bi-pencil"></i> Edit
+                  </button>
+                  <button class="btn btn-sm btn-light-danger d-flex align-items-center gap-1" (click)="confirmDelete(exam.examID)">
+                    <i class="bi bi-trash"></i> Delete
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card-footer bg-light d-flex justify-content-between align-items-center">
+      <div class="text-muted">
+        Showing <strong>{{exams.length}}</strong> exam records
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div *ngIf="showModal" class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5); z-index: 1055;">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow-lg">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title fw-bold"><i class="bi bi-exclamation-triangle me-2"></i> Confirm Deletion</h5>
+        <button type="button" class="btn-close btn-close-white" (click)="closeModal()"></button>
+      </div>
+      <div class="modal-body py-4">
+        <div class="text-center">
+          <i class="bi bi-trash text-danger" style="font-size: 3rem;"></i>
+          <h5 class="mt-3">Are you sure you want to delete this exam?</h5>
+          <p class="text-muted">This action cannot be undone. All related data will be permanently removed.</p>
+        </div>
+      </div>
+      <div class="modal-footer border-0">
+        <button class="btn btn-outline-secondary w-50 py-2" (click)="closeModal()">
+          <i class="bi bi-x-circle me-2"></i> Cancel
+        </button>
+        <button class="btn btn-danger w-50 py-2" (click)="deleteConfirmed()">
+          <i class="bi bi-trash me-2"></i> Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .icon-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .btn-light-primary {
+    background-color: rgba(13, 110, 253, 0.1);
+    color: #0d6efd;
+  }
+  
+  .btn-light-warning {
+    background-color: rgba(255, 193, 7, 0.1);
+    color: #ffc107;
+  }
+  
+  .btn-light-danger {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+  }
+  
+  .btn-light-primary:hover, .btn-light-warning:hover, .btn-light-danger:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+</style>

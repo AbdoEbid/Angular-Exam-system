@@ -1,0 +1,57 @@
+<!-- src/app/components/student/student-register/student-register.html -->
+<div class="min-vh-100 d-flex justify-content-center align-items-center bg-light">
+  <div class="bg-white shadow rounded p-5" style="width: 100%; max-width: 500px;">
+    <h2 class="text-center mb-4 text-success fw-bold">Student Register</h2>
+
+    <form (ngSubmit)="register()" #regForm="ngForm">
+      <div class="form-group mb-3">
+        <label for="name" class="form-label">Full Name</label>
+        <input
+          type="text"
+          id="name"
+          class="form-control"
+          [(ngModel)]="name"
+          name="name"
+          placeholder="Enter your full name"
+          required />
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input
+          type="email"
+          id="email"
+          class="form-control"
+          [(ngModel)]="email"
+          name="email"
+          placeholder="Enter your email"
+          required />
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input
+          type="password"
+          id="password"
+          class="form-control"
+          [(ngModel)]="password"
+          name="password"
+          placeholder="Create a password"
+          required />
+      </div>
+
+      <div *ngIf="errorMsg" class="alert alert-danger text-center">
+        {{ errorMsg }}
+      </div>
+
+      <button type="submit" class="btn btn-success w-100" [disabled]="regForm.invalid">
+        Register
+      </button>
+    </form>
+
+    <div class="text-center mt-4">
+      <span class="text-muted">Already have an account?</span>
+      <a [routerLink]="['/login']" class="text-decoration-none fw-bold text-primary">Login</a>
+    </div>
+  </div>
+</div>
